@@ -48,7 +48,7 @@ def notificar_email(servidor_banco, dir_bkp_destino, pasta_rotina, tipo_backup, 
                 <li style="margin-left:15px"><b>Em Uso:&nbsp;</b>{used_disck}<b>&nbsp;</b></li>
                 <li style="margin-left:15px"><b>Livre:&nbsp;</b>{free_disk}</li>
             </ul>
-            <div><font color="#ffffff">ZDpB4Ife2LAEEwmMlJDQ</font></div>
+            <div><font color="#ffffff" style="font-size: 1px;">ZDpB4Ife2LAEEwmMlJDQ</font></div>
         </div>
     </div>
 </div>

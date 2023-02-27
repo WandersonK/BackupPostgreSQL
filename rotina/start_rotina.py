@@ -21,6 +21,7 @@ servidores_file = open(f'{pasta_rotina}/servidores_bd.txt')
 user_email = 'ENDEREÇO DE EMAIL AQUI'
 pass_email = 'SENHA DO EMAIL AQUI'
 tipo_backup = argv[1].upper() # DIARIO, SEMANAL, MENSAL
+user_banco = 'backup'
 
 if not path.isdir(log_dir):
     makedirs(log_dir)
@@ -37,20 +38,20 @@ for server_e_porta in servidores_file:
         
         for porta in portas_lista:
             if tipo_backup == 'MENSAL':
-                gerar_dump_all(log_email_exito, log_email_falha, tipo_backup, log_dir, dir_bkp_destino, bkp_data, dir_bkp_frio, servidor_banco, porta)
+                gerar_dump_all(log_email_exito, log_email_falha, tipo_backup, log_dir, dir_bkp_destino, bkp_data, dir_bkp_frio, user_banco, servidor_banco, porta)
             else:
-                bancos_listagem(log_email_exito, log_email_falha, bkp_data, log_dir, tipo_backup, dir_bkp_destino, dir_bkp_frio, servidor_banco, porta)
+                bancos_listagem(log_email_exito, log_email_falha, bkp_data, log_dir, tipo_backup, dir_bkp_destino, dir_bkp_frio, user_banco, servidor_banco, porta)
             
     else:
         servidor_banco = server_e_porta.split()[0]
         if tipo_backup == 'MENSAL':
-            gerar_dump_all(log_email_exito, log_email_falha, tipo_backup, log_dir, dir_bkp_destino, bkp_data, dir_bkp_frio, servidor_banco)
+            gerar_dump_all(log_email_exito, log_email_falha, tipo_backup, log_dir, dir_bkp_destino, bkp_data, dir_bkp_frio, user_banco, servidor_banco)
         else:
-            bancos_listagem(log_email_exito, log_email_falha, bkp_data, log_dir, tipo_backup, dir_bkp_destino, dir_bkp_frio, servidor_banco)
+            bancos_listagem(log_email_exito, log_email_falha, bkp_data, log_dir, tipo_backup, dir_bkp_destino, dir_bkp_frio, user_banco, servidor_banco)
 
-    ths = enumerate()
-    for thin in ths[1:]:
-        thin.join()
+    threads = enumerate()
+    for thread in threads[1:]:
+        thread.join()
     
     excluir_bkp_frio(dir_bkp_frio, log_dir, log_email_exito, log_email_falha)
     

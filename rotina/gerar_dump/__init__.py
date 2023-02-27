@@ -2,7 +2,7 @@ from escrita_logs import escrita_logs
 from copiar_prolongado import copiar_prolongado
 
 
-def gerar_dump(lista_bancos, log_email_exito, log_email_falha, tipo_backup, dir_bkp_destino, bkp_data, log_dir, dir_bkp_frio, servidor_banco, porta_banco):
+def gerar_dump(lista_bancos, log_email_exito, log_email_falha, tipo_backup, dir_bkp_destino, bkp_data, log_dir, dir_bkp_frio, user_banco, servidor_banco, porta_banco):
     from os import makedirs, path
     import subprocess
     from datetime import datetime
@@ -16,10 +16,10 @@ def gerar_dump(lista_bancos, log_email_exito, log_email_falha, tipo_backup, dir_
         
         if tipo_backup == 'DIARIO':
             nome_arquivo = f'BKP_{db}_{bkp_data}.compressed'
-            comando_preparo = ['pg_dump', '-U', 'ubkp_apl', '-h', f'{servidor_banco}', '-p', f'{porta_banco}', '-Z', '9', '-d', f'{db}', '-N', 'stage', '-N', 'audit', '-f', f'{dir_bkp}/{nome_arquivo}']
+            comando_preparo = ['pg_dump', '-U', user_banco, '-h', f'{servidor_banco}', '-p', f'{porta_banco}', '-Z', '9', '-d', f'{db}', '-N', 'stage', '-N', 'audit', '-f', f'{dir_bkp}/{nome_arquivo}']
         elif tipo_backup == 'SEMANAL':
             nome_arquivo = f'BKP_{db}_STAGE_AUDIT_{bkp_data}.compressed'
-            comando_preparo = ['pg_dump', '-U', 'ubkp_apl', '-h', f'{servidor_banco}', '-p', f'{porta_banco}', '-Z', '9', '-d', f'{db}', '-f', f'{dir_bkp}/{nome_arquivo}']
+            comando_preparo = ['pg_dump', '-U', user_banco, '-h', f'{servidor_banco}', '-p', f'{porta_banco}', '-Z', '9', '-d', f'{db}', '-f', f'{dir_bkp}/{nome_arquivo}']
         
         
         saida_dump = subprocess.run(comando_preparo, capture_output=True, text=True)

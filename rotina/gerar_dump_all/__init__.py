@@ -7,7 +7,7 @@ from escrita_logs import escrita_logs
 from copiar_prolongado import copiar_prolongado
 
 
-def gerar_dump_all(log_email_exito, log_email_falha, tipo_backup, log_dir, dir_bkp_destino, bkp_data, dir_bkp_frio, servidor_banco, porta_banco=5431):
+def gerar_dump_all(log_email_exito, log_email_falha, tipo_backup, log_dir, dir_bkp_destino, bkp_data, dir_bkp_frio, user_banco, servidor_banco, porta_banco=5431):
     from threading import Thread
     
     nome_arquivo = f'BKP_{bkp_data}_ALL.sql'
@@ -17,7 +17,7 @@ def gerar_dump_all(log_email_exito, log_email_falha, tipo_backup, log_dir, dir_b
     if not path.isdir(dir_bkp):
         makedirs(dir_bkp)
     
-    comando_preparo = ['pg_dumpall', '-U', 'ubkp_apl', '-h', f'{servidor_banco}', '-p', f'{porta_banco}', '-f', f'{dir_bkp}/{nome_arquivo}']
+    comando_preparo = ['pg_dumpall', '-U', user_banco, '-h', f'{servidor_banco}', '-p', f'{porta_banco}', '-f', f'{dir_bkp}/{nome_arquivo}']
     saida_dump = subprocess.run(comando_preparo, capture_output=True, text=True)
     data_termino = datetime.now(timezone("America/Sao_Paulo")).strftime("%Y/%m/%d %H:%M:%S.%f")
 
@@ -41,10 +41,11 @@ def compactar_dumps(log_email_exito, log_email_falha, tipo_backup, bkp_data, log
     from shutil import make_archive, Error
     # Compacta o arquivo de backup e grava log se erro
     excluir_pos_compactado = True
+    nome_arquivo_compactado = f'{nome_arquivo}.tar.gz'
     
     try:
         make_archive(f'{dir_bkp}/{nome_arquivo}', 'gztar', f'{dir_bkp}/', nome_arquivo)
-        copiar_prolongado(log_email_exito, log_email_falha, bkp_data, dir_bkp, nome_arquivo, log_dir, dir_bkp_frio, servidor_banco, tipo_backup)
+        copiar_prolongado(log_email_exito, log_email_falha, bkp_data, dir_bkp, nome_arquivo_compactado, log_dir, dir_bkp_frio, servidor_banco, tipo_backup)
     except (Exception, Error) as erro_comp:
         data_log_comp = datetime.now(timezone("America/Sao_Paulo")).strftime("%Y/%m/%d %H:%M:%S.%f")
         nome_arquivo_log = f'{log_dir}/bakup_database_{bkp_data}__{servidor_banco}_stderr.log'
