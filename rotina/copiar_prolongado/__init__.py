@@ -9,7 +9,6 @@ from escrita_logs import escrita_logs
 def copiar_prolongado(log_email_exito, log_email_falha, bkp_data, dir_bkp, nome_arquivo, log_dir, dir_bkp_frio, servidor_banco, tipo_backup):
     
     dircompleto_bkp_frio = f'{dir_bkp_frio}/{servidor_banco}/{tipo_backup}'.replace('.', '_')
-    nome_arquivo_log = f''
     
     if not path.isdir(dircompleto_bkp_frio):
         makedirs(dircompleto_bkp_frio)

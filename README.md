@@ -39,8 +39,11 @@ Uma especificação das variáveis:
 
 ## OUTRAS CONFIGURAÇÕES
 ### Dias para excluir arquivos da pasta prolongado
-O tempo definido para excluir os arquivos do Prolongado, são 60 dias, caso seja necessário alterar, deve-se acessar o pacote “excluir_bkp_frio”. Lá haverá uma variável chamada "tempo_delete", entre parênteses na função "timedelta", informe o tempo desejado.
-Na linha 22 para a mensagem de Log, altere também de 60 para o que for atualizado.
+O tempo definido para excluir os arquivos do Prolongado, são de 60 dias, caso seja necessário alterar, deve-se acessar o pacote "excluir_bkps". Lá haverá uma variável chamada "tempo_delete_prolongado", entre parênteses na função "timedelta", informe o tempo desejado.
+
+O mesmo vale para o tempo do backup principal, que contém a variável "tempo_delete_normal", que atualmente está definido para 30 dias.
+
+Na mensagem para o log, o dia está sendo descrito, altere também conforme o dia escolhido, na variável "mensagem_exito".
 
 ### Bancos desconsiderados no DIARIO
 Alguns bancos foram desconsiderados do backup diário, caso seja necessário adicionar ou remover algum, deve-se editar o pacote "gerar_dump", na variável "comando_preparo", onde contém o parâmetro -N. Para adicionar um novo, informe com a mesma estrutura, respeitando as aspas e vírgulas.

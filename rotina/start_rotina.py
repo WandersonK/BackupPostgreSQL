@@ -9,7 +9,7 @@ from os import path, makedirs
 from gerar_dump_all import gerar_dump_all
 from bancos_listagem import bancos_listagem
 from notificar_email import notificar_email
-from excluir_bkp_frio import excluir_bkp_frio
+from excluir_bkps import excluir_bkps
 
 
 pasta_rotina = '/home/ubkp/rotina' # Utilizado pela def email e variavel servidores_files
@@ -22,6 +22,7 @@ user_email = 'ENDEREÇO DE EMAIL AQUI'
 pass_email = 'SENHA DO EMAIL AQUI'
 tipo_backup = argv[1].upper() # DIARIO, SEMANAL, MENSAL
 user_banco = 'backup'
+
 
 if not path.isdir(log_dir):
     makedirs(log_dir)
@@ -53,7 +54,7 @@ for server_e_porta in servidores_file:
     for thread in threads[1:]:
         thread.join()
     
-    excluir_bkp_frio(dir_bkp_frio, log_dir, log_email_exito, log_email_falha)
+    excluir_bkps(dir_bkp_destino, log_dir, log_email_exito, log_email_falha)
     
     notificar_email(servidor_banco, dir_bkp_destino, pasta_rotina, tipo_backup, log_email_exito, log_email_falha, user_email, pass_email)
     
