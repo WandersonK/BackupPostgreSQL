@@ -22,9 +22,9 @@ No "contatos_to.txt", ficam os e-mails para os quais serão enviadas as notifica
 
 Exemplo:
 
-* destinatario.1@topocart.com.br
-* destinatario.2@topocart.com.br
-* destinatario.3@topocart.com.br
+* destinatario.1@email.com
+* destinatario.2@email.com
+* destinatario.3@email.com
 
 No "start_rotina.py", só é necessário preenchimento caso altere a estrutura das pastas, usuário ou senha de e-mail. Essas informações ficam nas primeiras linhas do script.
 
